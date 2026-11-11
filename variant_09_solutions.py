@@ -16,7 +16,7 @@ def main():
     def newton_method(func:Callable[[float],float], df:Callable[[float],float], x0:float, eps:float):
         x1 = x0 - func(x0)/df(x0)
         i=0
-        A=[0 for _ in range(10**6)]
+        A=[0 for _ in range(10**7)]
         A[0]=x0
         while abs(x1-x0) >= eps:
             i+=1
@@ -24,11 +24,12 @@ def main():
             x1 = x0 - func(x0)/df(x0)
             A[i]=x1
         save_results_to_file(i,x1,A)
+        return f'За {i} ітерацій було отримано нуль функції (у наближені порядку ε): {x1:.6f}'
     def func(x0:float) -> float:
         return math.cos(x0**2)-x0*10
     def df(x0:float) -> float:
         return -2*x0*math.sin(x0**2)-10
     x0=float(input('Введіть початкове наближення: '))
     eps=0.00002
-    newton_method(func, df, x0, eps)
+    print(newton_method(func, df, x0, eps))
 main()
